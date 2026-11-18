@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="FWL" constructor="AddressFieldFr" version="1.0.0" display-name-key="AddressFieldFr" description-key="Champ de saisie adresse avec autocompletion (Photon / OpenStreetMap)" control-type="virtual" >
+    <!-- Le composant appelle un service externe (Photon) depuis le navigateur : il est donc PREMIUM.
+         Si PhotonBaseUrl pointe vers une autre instance, ajouter son domaine ci-dessous. -->
+    <external-service-usage enabled="true">
+      <domain>photon.komoot.io</domain>
+    </external-service-usage>
+
+    <!-- ═══════════════ Propriete liee ═══════════════ -->
+    <!-- Texte affiche dans le champ (adresse complete) -->
+    <property name="Value" display-name-key="Value" description-key="Texte affiche dans le champ : adresse complete choisie ou saisie libre." of-type="SingleLine.Text" usage="bound" required="false" />
+
+    <!-- ═══════════════ Entrees (configuration) ═══════════════ -->
+    <property name="PhotonBaseUrl" display-name-key="PhotonBaseUrl" description-key="URL de base du service Photon, sans slash final. Defaut : https://photon.komoot.io" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="MinCharsNumeric" display-name-key="MinCharsNumeric" description-key="Nombre minimal de caracteres avant recherche quand la saisie commence par un chiffre. Defaut : 8" of-type="Whole.None" usage="input" required="false" />
+    <property name="MinCharsText" display-name-key="MinCharsText" description-key="Nombre minimal de caracteres avant recherche quand la saisie ne commence pas par un chiffre. Defaut : 3" of-type="Whole.None" usage="input" required="false" />
+    <property name="DebounceMs" display-name-key="DebounceMs" description-key="Temporisation en millisecondes apres la derniere frappe. Defaut : 500" of-type="Whole.None" usage="input" required="false" />
+    <property name="CountryCodes" display-name-key="CountryCodes" description-key="Codes pays ISO alpha-2 autorises, separes par des virgules. Defaut : FR" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="Language" display-name-key="Language" description-key="Langue des resultats : default, de, en ou fr. Defaut : fr" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="MaxResults" display-name-key="MaxResults" description-key="Nombre de suggestions affichees (1 a 50). Defaut : 5" of-type="Whole.None" usage="input" required="false" />
+    <property name="Layers" display-name-key="Layers" description-key="Types de resultats Photon, separes par des virgules. Defaut : house,street" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="BiasLatitude" display-name-key="BiasLatitude" description-key="Latitude du point qui favorise les resultats proches (sans les restreindre)." of-type="FP" usage="input" required="false" />
+    <property name="BiasLongitude" display-name-key="BiasLongitude" description-key="Longitude du point qui favorise les resultats proches (sans les restreindre)." of-type="FP" usage="input" required="false" />
+    <property name="DefaultValue" display-name-key="DefaultValue" description-key="Adresse prerenseignee, affichee telle quelle sans appel au service." of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="Placeholder" display-name-key="Placeholder" description-key="Texte indicatif affiche quand le champ est vide." of-type="SingleLine.Text" usage="input" required="false" />
+
+    <!-- ═══════════════ Sorties (adresse retenue) ═══════════════ -->
+    <property name="FullAddress" display-name-key="FullAddress" description-key="Adresse complete, ex. 10 Rue de Rivoli, 75004 Paris" of-type="SingleLine.Text" usage="output" required="false" />
+    <property name="HouseNumber" display-name-key="HouseNumber" description-key="Numero dans la voie (texte : peut valoir 10bis)." of-type="SingleLine.Text" usage="output" required="false" />
+    <property name="Street" display-name-key="Street" description-key="Nom de la voie." of-type="SingleLine.Text" usage="output" required="false" />
+    <property name="PostCode" display-name-key="PostCode" description-key="Code postal (texte : conserve les zeros initiaux)." of-type="SingleLine.Text" usage="output" required="false" />
+    <property name="City" display-name-key="City" description-key="Commune." of-type="SingleLine.Text" usage="output" required="false" />
+    <property name="Country" display-name-key="Country" description-key="Pays." of-type="SingleLine.Text" usage="output" required="false" />
+    <property name="Latitude" display-name-key="Latitude" description-key="Latitude de la position retenue." of-type="FP" usage="output" required="false" />
+    <property name="Longitude" display-name-key="Longitude" description-key="Longitude de la position retenue." of-type="FP" usage="output" required="false" />
+    <property name="CountryCode" display-name-key="CountryCode" description-key="Code pays ISO alpha-2, ex. FR." of-type="SingleLine.Text" usage="output" required="false" />
+    <property name="County" display-name-key="County" description-key="Departement." of-type="SingleLine.Text" usage="output" required="false" />
+    <property name="State" display-name-key="State" description-key="Region." of-type="SingleLine.Text" usage="output" required="false" />
+    <property name="District" display-name-key="District" description-key="Arrondissement ou quartier." of-type="SingleLine.Text" usage="output" required="false" />
+    <property name="IsValidated" display-name-key="IsValidated" description-key="Vrai uniquement si une suggestion a ete choisie ; faux pour une saisie libre." of-type="TwoOptions" usage="output" required="false" />
+    <property name="OsmId" display-name-key="OsmId" description-key="Identifiant OpenStreetMap stable, ex. N703432291." of-type="SingleLine.Text" usage="output" required="false" />
+
+    <resources>
+      <code path="index.ts" order="1"/>
+      <platform-library name="React" version="16.14.0" />
+      <platform-library name="Fluent" version="9.46.2" />
+    </resources>
+  </control>
+</manifest>

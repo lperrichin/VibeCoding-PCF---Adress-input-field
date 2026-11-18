@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="FWL"
+           constructor="AdressFieldEN"
+           version="0.0.1"
+           display-name-key="AdressField_EN"
+           description-key="Address autocompletion powered by Photon (OpenStreetMap)"
+           control-type="virtual">
+
+    <!-- External service: this control calls the Photon geocoder (premium component, domain declared for transparency).
+         If photonBaseUrl is changed to a self-hosted instance, add its domain here. -->
+    <external-service-usage enabled="true">
+      <domain>photon.komoot.io</domain>
+    </external-service-usage>
+
+    <!-- ===================== BOUND PROPERTIES (read + written) ===================== -->
+    <property name="addressLine"     display-name-key="Address line"     description-key="House number and street (or place name). Written when a suggestion is selected; also receives free text." of-type="SingleLine.Text" usage="bound" required="true" />
+    <property name="postalCode"      display-name-key="Postal code"      description-key="Postal code of the selected address."                of-type="SingleLine.Text" usage="bound" required="false" />
+    <property name="city"            display-name-key="City"             description-key="City of the selected address."                       of-type="SingleLine.Text" usage="bound" required="false" />
+    <property name="county"          display-name-key="County"           description-key="County of the selected address."                     of-type="SingleLine.Text" usage="bound" required="false" />
+    <property name="stateOrProvince" display-name-key="State/Province"   description-key="State or province of the selected address."          of-type="SingleLine.Text" usage="bound" required="false" />
+    <property name="country"         display-name-key="Country"          description-key="Country name, in the configured language."           of-type="SingleLine.Text" usage="bound" required="false" />
+    <property name="countryCode"     display-name-key="Country code"     description-key="ISO 3166-1 alpha-2 country code (e.g. GB)."          of-type="SingleLine.Text" usage="bound" required="false" />
+    <property name="latitude"        display-name-key="Latitude"         description-key="Latitude of the selected address. Also used to favour nearby results." of-type="FP" usage="bound" required="false" />
+    <property name="longitude"       display-name-key="Longitude"        description-key="Longitude of the selected address. Also used to favour nearby results." of-type="FP" usage="bound" required="false" />
+
+    <!-- ===================== INPUT PROPERTIES (configuration) ===================== -->
+    <property name="photonBaseUrl"     display-name-key="Photon base URL"                    description-key="Photon server URL, no trailing slash. Default: https://photon.komoot.io" of-type="SingleLine.Text" usage="input" required="false" default-value="https://photon.komoot.io" />
+    <property name="language"          display-name-key="Language"                           description-key="Language of results: en, fr, de or default. Any other value falls back to en." of-type="SingleLine.Text" usage="input" required="false" default-value="en" />
+    <property name="countryCodes"      display-name-key="Country codes (CSV)"                description-key="Restrict search to these ISO alpha-2 country codes, e.g. GB,IE. Empty = worldwide." of-type="SingleLine.Text" usage="input" required="false" default-value="GB" />
+    <property name="layers"            display-name-key="Layers (CSV, no house)"             description-key="Photon layers to search: street, locality, district, city, county, state, country, other. The house layer is ignored." of-type="SingleLine.Text" usage="input" required="false" default-value="street,locality,district,city" />
+    <property name="maxResults"        display-name-key="Max suggestions"                    description-key="Number of suggestions shown (1-10)."                       of-type="Whole.None" usage="input" required="false" default-value="5" />
+    <property name="minChars"          display-name-key="Min characters"                     description-key="Minimum characters before searching (2-10)."               of-type="Whole.None" usage="input" required="false" default-value="3" />
+    <property name="requestIntervalMs" display-name-key="Min interval between API calls (ms)" description-key="Never start two Photon calls closer than this (250-2000)." of-type="Whole.None" usage="input" required="false" default-value="500" />
+    <property name="keepHouseNumber"   display-name-key="Keep typed house number"            description-key="Extract the typed house number from the search and re-apply it to the selected street." of-type="TwoOptions" usage="input" required="false" default-value="true" />
+    <property name="placeholder"       display-name-key="Placeholder"                        description-key="Placeholder text of the empty field."                      of-type="SingleLine.Text" usage="input" required="false" default-value="Start typing an address…" />
+
+    <resources>
+      <code path="index.ts" order="1"/>
+      <platform-library name="React" version="16.14.0" />
+      <platform-library name="Fluent" version="9.46.2" />
+    </resources>
+  </control>
+</manifest>
